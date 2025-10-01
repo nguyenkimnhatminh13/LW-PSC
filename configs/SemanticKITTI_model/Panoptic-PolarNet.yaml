@@ -1,0 +1,42 @@
+model_name: Panoptic_PolarNet
+
+dataset:
+    name: semantickitti
+    path: data
+    output_path: out/SemKITTI
+    instance_pkl_path: data_instances
+    rotate_aug: False
+    flip_aug: False
+    # flip_aug: False
+    inst_aug: False
+    shuffle_index: False
+
+    gt_generator:
+        sigma: 5
+    grid_size: [256,256,32]
+
+model:
+    model_save_path: ./Panoptic_SemKITTI.pt
+    pretrained_model: ./pretrained_weight/LW-PSC.pt
+    polar: False
+    visibility: False
+    
+    train_batch_size: 4
+    val_batch_size: 1
+    test_batch_size: 1
+    check_iter: 4700
+    max_epoch: 100
+    post_proc:
+        threshold: 0.1
+        nms_kernel: 5
+        top_k: 100
+    center_loss: MSE
+    offset_loss: L1
+    center_loss_weight: 300
+    offset_loss_weight: 30
+    # center_loss_weight: 200
+    # offset_loss_weight: 0.01
+    # enable_SAP: True
+    # SAP:
+    #     start_epoch: 30
+    #     rate: 0.01
